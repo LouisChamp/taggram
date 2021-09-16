@@ -1,0 +1,45 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.header__container {
+  display: flex;
+  max-width: 933px;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.current-user {
+  margin-left: auto;
+  padding: 15px 0 16px;
+  display: flex;
+  align-items: center;
+}
+
+.current-user__username {
+  color: #262626;
+  height: 18;
+  width: 46;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 12px;
+}
+
+.current-user__avatar {
+  height: 22px;
+  width: 22px;
+  background-color: #dbdbdb;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.logo {
+  padding: 0 1em;
+  width: 100px;
+  &:hover {
+    cursor: pointer;
+  }
+}
