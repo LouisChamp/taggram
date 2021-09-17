@@ -1,9 +1,13 @@
 import Sidebar from "./Sidebar"
-import Cards from "./Cards"
+import Card from "./Card"
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import getRandomInt from "../helper/random"
 
-function Body() {
+function Body(props) {
+  // Props
+  const { userAvatarId } = props
+
   // Constant values
   const API_BASE_URL = "https://taggram.herokuapp.com"
 
@@ -22,22 +26,22 @@ function Body() {
   }, [])
 
   if (isLoading) {
-    return <div className="container">Loading . . .</div>
+    return <div className="container">Loading...</div>
   }
 
   return (
-    <body className="body">
+    <div className="body">
       <div className="container">
-        <Cards />
+        <Card image={post.photo} />
         <Sidebar
           username={post.user.username}
           location={post.location.city + ", " + post.location.country}
-          image={post.user.avatar}
+          userAvatarId={getRandomInt(1, 70)}
           postId={post.uuid}
           comments={post.comments}
         />
       </div>
-    </body>
+    </div>
   )
 }
 
