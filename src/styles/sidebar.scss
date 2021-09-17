@@ -1,4 +1,57 @@
 .sidebar {
-  width: 320px;
-  padding: 7em 2em 0 2em;
+  display: flex;
+  flex-direction: column;
+  height: 598px;
+  padding: 0em 1.25em;
+}
+
+.comments {
+  overflow-y: scroll;
+
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.comments::-webkit-scrollbar {
+  display: none;
+}
+
+.commment-meta {
+  padding: 1.25em 1em 1.25em 1em;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.comment-count {
+}
+
+.comment-date {
+  color: #8e8e8e;
+}
+
+.add-comment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1em;
+  padding: 0.5em 1em 0.5em 1em;
+  outline: none;
+
+  .comment-text {
+    color: #8e8e8e;
+    border: none;
+    border-width: 0px;
+
+    &.hover {
+      outline: none;
+    }
+
+    &.focus {
+      outline: none;
+    }
+  }
+
+  .comment-submit {
+    font-weight: 700;
+    font-size: 1.25em;
+    color: #0095f6;
+  }
 }

@@ -1,23 +1,19 @@
 .profile {
   display: flex;
   align-items: center;
-  font-size: 0.8em;
-  margin-bottom: 0.85em;
+  font-size: 0.85em;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 1.25em 0em 1.25em 0em;
 
-  .textContainer {
+  .text-container {
     display: flex;
     flex-direction: column;
-    margin-left: 1em;
     max-width: 180px;
+    padding-left: 1.5em;
 
-    .postAuthor {
+    .post-author {
       font-weight: 500;
       margin-bottom: 5px;
-
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
     }
   }
 }

@@ -8,12 +8,12 @@ function Comment(props) {
   return (
     <div className="comment">
       <ProfileIcon isHeaderIcon={false} userAvatarId={getRandomInt(1, 70)} />
-      <div className="comment-text">
-        <div className="commentContainer">
-          <div className="author">{author}</div>
-          <div className="message">{message}</div>
-        </div>
-        <div className="hoursAgo">{createdAt} + h</div>
+      <div className="text-container">
+        <p className="comment-container">
+          <span className="author">{author}</span>
+          <span className="message">{message}</span>
+        </p>
+        <div className="hoursAgo">{createdAt}h</div>
       </div>
     </div>
   )

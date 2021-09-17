@@ -6,9 +6,9 @@ function Profile(props) {
 
   return (
     <div className="profile">
-      <ProfileIcon isHeaderIcon="false" userAvatarId={userAvatarId} />
-      <div className="textContainer">
-        <span className="postAuthor">{username}</span>
+      <ProfileIcon isHeaderIcon={false} userAvatarId={userAvatarId} />
+      <div className="text-container">
+        <span className="post-author">{username}</span>
         <span className="location">{location}</span>
       </div>
     </div>
