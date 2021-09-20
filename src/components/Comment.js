@@ -1,13 +1,12 @@
 import "../styles/comment.scss"
 import ProfileIcon from "./ProfileIcon"
-import getRandomInt from "../helper/random"
 
 function Comment(props) {
-  const { author, message, createdAt } = props
+  const { author, message, createdAt, avatarId } = props
 
   return (
     <div className="comment">
-      <ProfileIcon isHeaderIcon={false} userAvatarId={getRandomInt(1, 70)} />
+      <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
       <div className="text-container">
         <p className="comment-container">
           <span className="author">{author}</span>

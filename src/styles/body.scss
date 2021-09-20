@@ -1,5 +1,24 @@
 .body {
+  height: 100vh;
+  padding-top: 20px;
   background-color: #fafafa;
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.body__container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 933px;
+  height: 598px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+.body-loading {
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

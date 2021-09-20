@@ -1,12 +1,14 @@
-import Sidebar from "./Sidebar"
-import Card from "./Card"
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import Sidebar from "./Sidebar"
+import Card from "./Card"
+import loader from "../images/ajax-loader.gif"
+import "../styles/body.scss"
 import getRandomInt from "../helper/random"
 
 function Body(props) {
   // Props
-  const { userAvatarId } = props
+  const { user } = props
 
   // Constant values
   const API_BASE_URL = "https://taggram.herokuapp.com"
@@ -19,6 +21,9 @@ function Body(props) {
     axios
       .get(`${API_BASE_URL}/post`)
       .then(response => {
+        response.data.comments.map(
+          comment => (comment.avatarId = getRandomInt(1, 70))
+        )
         setPost(response.data)
         setIsLoading(false)
       })
@@ -26,20 +31,18 @@ function Body(props) {
   }, [])
 
   if (isLoading) {
-    return <div className="container">Loading...</div>
+    return (
+      <div className="body-loading">
+        <img src={loader} alt="Loading . . ." width="150" />
+      </div>
+    )
   }
 
   return (
     <div className="body">
-      <div className="container">
+      <div className="body__container">
         <Card image={post.photo} />
-        <Sidebar
-          username={post.user.username}
-          location={post.location.city + ", " + post.location.country}
-          userAvatarId={getRandomInt(1, 70)}
-          postId={post.uuid}
-          comments={post.comments}
-        />
+        <Sidebar post={post} user={user} setPost={setPost} />
       </div>
     </div>
   )
