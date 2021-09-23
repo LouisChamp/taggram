@@ -17,28 +17,28 @@
   }
 }
 
-.comments-footer {
+.post-footer {
   border-top: 1px solid #dbdbdb;
   height: 116px;
   margin-bottom: auto;
   flex-shrink: 0;
 }
 
-.comment-meta {
+.post-meta {
   padding: 0 1.25em;
   border-bottom: 1px solid #dbdbdb;
   flex-shrink: 0;
   height: 60px;
 }
 
-.comment-count {
+.post-comment-count {
   padding-top: 15px;
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 4px;
 }
 
-.comment-date {
+.post-date {
   font-size: 10px;
   font-weight: 300;
   color: #8e8e8e;

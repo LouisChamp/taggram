@@ -14,18 +14,17 @@ function App() {
   const [user, setUser] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
-  let avatarId = getRandomInt(1, 70)
-
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/me`)
       .then(response => {
-        setUser(response.data)
+        setUser({ ...response.data, avatarId: getRandomInt(1, 70) })
         setIsLoading(false)
       })
       .catch(console.log)
   }, [])
 
+  // Ajax loader technique for better user experience
   if (isLoading) {
     return (
       <div className="app-loading">
@@ -34,13 +33,10 @@ function App() {
     )
   }
 
-  let userWithId = { ...user }
-  userWithId.avatarId = avatarId
-
   return (
     <div className="App">
-      <Header user={userWithId} />
-      <Body user={userWithId} />
+      <Header user={user} />
+      <Body user={user} />
     </div>
   )
 }

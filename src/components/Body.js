@@ -30,6 +30,7 @@ function Body(props) {
       .catch(console.log)
   }, [])
 
+  // Ajax loader
   if (isLoading) {
     return (
       <div className="body-loading">

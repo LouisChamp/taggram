@@ -2,7 +2,7 @@ import "../styles/comment.scss"
 import ProfileIcon from "./ProfileIcon"
 
 function Comment(props) {
-  const { author, message, createdAt, avatarId } = props
+  const { author, message, timeAgo, avatarId } = props
 
   return (
     <div className="comment">
@@ -12,7 +12,7 @@ function Comment(props) {
           <span className="author">{author}</span>
           <span className="message">{message}</span>
         </p>
-        <div className="hoursAgo">{createdAt}h</div>
+        <div className="hoursAgo">{timeAgo}</div>
       </div>
     </div>
   )

@@ -3,6 +3,8 @@ import Profile from "./Profile"
 import Comment from "./Comment"
 import React, { useRef } from "react"
 import axios from "axios"
+import TimeAgo from "javascript-time-ago"
+import { commentStyle, postStyle } from "../helper/time"
 
 function Sidebar(props) {
   // Props
@@ -10,6 +12,9 @@ function Sidebar(props) {
 
   // React Hooks
   const newCommentRef = useRef(null)
+  const commentsRef = useRef(null)
+
+  const timeAgo = new TimeAgo("pt")
 
   // Constant values
   const API_BASE_URL = "https://taggram.herokuapp.com"
@@ -19,7 +24,7 @@ function Sidebar(props) {
 
     if (comment !== "") {
       axios
-        .post(`${API_BASE_URL}/posts/${post.uuid}/comments?stable=true`, {
+        .post(`${API_BASE_URL}/posts/${post.uuid}/comments`, {
           username: user.username,
           message: comment,
         })
@@ -30,11 +35,24 @@ function Sidebar(props) {
             ...response.data.at(-1),
             avatarId: user.avatarId,
           })
-          console.log(newPost)
           setPost(newPost)
+          scrollDown(commentsRef)
         })
-        .catch(console.log)
+        .catch(handleErrors)
     }
+  }
+
+  let handleErrors = error => {
+    if (error.response) {
+      if (error.response.status === 500) {
+        window.alert("Comentário não enviado, tente novamente.")
+      }
+    }
+    console.log(error)
+  }
+
+  let scrollDown = ref => {
+    ref.current.scrollTop = ref.current.scrollHeight
   }
 
   return (
@@ -43,24 +61,29 @@ function Sidebar(props) {
         username={post.user.username}
         location={post.location.city + ", " + post.location.country}
       />
-      <div className="comments">
+      <div className="comments" ref={commentsRef}>
         {post.comments.map(comment => (
           <Comment
             key={comment.user.username + comment.created_at}
             author={comment.user.username}
             message={comment.message}
-            createdAt={comment.created_at}
+            timeAgo={timeAgo.format(
+              Date.parse(comment.created_at),
+              commentStyle
+            )}
             avatarId={comment.avatarId}
           />
         ))}
       </div>
-      <div className="comments-footer">
-        <div className="comment-meta">
-          <div className="comment-count">
+      <div className="post-footer">
+        <div className="post-meta">
+          <div className="post-comment-count">
             {post.comments.length} comentário
             {post.comments.length === 1 ? "" : "s"}
           </div>
-          <div className="comment-date">9 de Outubro</div>
+          <div className="post-date">
+            {timeAgo.format(Date.parse(post.created_at), postStyle)}
+          </div>
         </div>
         <div className="add-comment">
           <input
