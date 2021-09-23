@@ -2,10 +2,7 @@ import "../styles/header.scss"
 import logo from "../images/taggram.png"
 import ProfileIcon from "./ProfileIcon"
 
-function Header(props) {
-  // props
-  const { user } = props
-
+function Header({ user }) {
   return (
     <>
       <div className="header">

@@ -5,10 +5,11 @@ import React, { useRef } from "react"
 import axios from "axios"
 import TimeAgo from "javascript-time-ago"
 import { commentStyle, postStyle } from "../helper/time"
+import getRandomInt from "../helper/random"
 
 function Sidebar(props) {
   // Props
-  const { post, user, setPost } = props
+  const { post, user, updateCurrentPost } = props
 
   // React Hooks
   const newCommentRef = useRef(null)
@@ -16,26 +17,27 @@ function Sidebar(props) {
 
   const timeAgo = new TimeAgo("pt")
 
-  // Constant values
-  const API_BASE_URL = "https://taggram.herokuapp.com"
-
+  // Update post's comment section with new comments and scroll down to the latest comment
   const handleSubmitComment = event => {
     const comment = newCommentRef.current.value
 
     if (comment !== "") {
       axios
-        .post(`${API_BASE_URL}/posts/${post.uuid}/comments`, {
+        .post(`/posts/${post.uuid}/comments`, {
           username: user.username,
           message: comment,
         })
         .then(response => {
           newCommentRef.current.value = ""
-          let newPost = { ...post }
-          newPost.comments.push({
-            ...response.data.at(-1),
-            avatarId: user.avatarId,
+
+          // Workaround for avatars not working from database
+          response.data.forEach(comment => {
+            if (!post.avatarMap.has(comment.user.username))
+              post.avatarMap.set(comment.user.username, getRandomInt(1, 70))
           })
-          setPost(newPost)
+          // end Workaround
+
+          updateCurrentPost({ ...post, comments: response.data })
           scrollDown(commentsRef)
         })
         .catch(handleErrors)
@@ -71,7 +73,7 @@ function Sidebar(props) {
               Date.parse(comment.created_at),
               commentStyle
             )}
-            avatarId={comment.avatarId}
+            avatarId={post.avatarMap.get(comment.user.username)}
           />
         ))}
       </div>

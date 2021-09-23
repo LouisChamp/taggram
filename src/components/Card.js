@@ -1,7 +1,6 @@
 import "../styles/card.scss"
 
-function Card(props) {
-  const { image } = props
+function Card({ image }) {
   return (
     <div className="card">
       <img className="cardImage" src={image} alt="card content" />

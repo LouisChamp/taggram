@@ -7,16 +7,13 @@ import axios from "axios"
 import loader from "../images/ajax-loader.gif"
 
 function App() {
-  // Constant values
-  const API_BASE_URL = "https://taggram.herokuapp.com"
-
   // React Hooks
   const [user, setUser] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/me`)
+      .get("/me")
       .then(response => {
         setUser({ ...response.data, avatarId: getRandomInt(1, 70) })
         setIsLoading(false)

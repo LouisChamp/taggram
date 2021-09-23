@@ -5,10 +5,12 @@ import App from "./components/App"
 import TimeAgo from "javascript-time-ago"
 import pt from "javascript-time-ago/locale/pt"
 import { commentLabels, postLabels } from "./helper/time"
+import axios from "axios"
 
 TimeAgo.addDefaultLocale(pt)
 TimeAgo.addLabels("pt", "commentLabels", commentLabels)
 TimeAgo.addLabels("pt", "postLabels", postLabels)
+axios.defaults.baseURL = "https://taggram.herokuapp.com"
 
 ReactDOM.render(
   <React.StrictMode>
