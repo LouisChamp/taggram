@@ -10,7 +10,7 @@ function Profile({ username, location, avatarId }) {
           {username === undefined ? "" : username}
         </span>
         <span className="location">
-          {location === undefined ? "" : location}
+          {username === undefined ? "Loading..." : location}
         </span>
       </div>
     </div>
