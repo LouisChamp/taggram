@@ -7,7 +7,7 @@ function Profile({ username, location, avatarId }) {
       <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
       <div className="text-container">
         <span className="post-author">{username ? username : ""}</span>
-        <span className="location">{username ? location : "Loading..."}</span>
+        <span className="location">{location ? location : "Loading..."}</span>
       </div>
     </div>
   )

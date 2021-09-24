@@ -10,7 +10,7 @@ const avatarId = getRandomInt(1, 70)
 
 function App() {
   // React Hooks
-  const [user, setUser] = useState(undefined)
+  const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {

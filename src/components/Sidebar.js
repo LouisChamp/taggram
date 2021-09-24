@@ -64,7 +64,9 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
     <div className="sidebar">
       <Profile
         username={post?.user?.username}
-        location={post?.location?.city + ", " + post?.location?.country}
+        location={
+          post?.location && post.location.city + ", " + post.location.country
+        }
         avatarId={post?.avatarMap.get(post.user.username)}
       />
       <div className="comments" ref={commentsRef}>
