@@ -6,12 +6,8 @@ function Profile({ username, location, avatarId }) {
     <div className="profile">
       <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
       <div className="text-container">
-        <span className="post-author">
-          {username === undefined ? "" : username}
-        </span>
-        <span className="location">
-          {username === undefined ? "Loading..." : location}
-        </span>
+        <span className="post-author">{username ? username : ""}</span>
+        <span className="location">{username ? location : "Loading..."}</span>
       </div>
     </div>
   )
