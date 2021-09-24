@@ -30,7 +30,6 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
           // Workaround for avatars not showing from API
           let newAvatarMap = new Map(post.avatarMap)
           newAvatarMap.set(user.username, avatarId)
-          console.log(newAvatarMap)
           response.data.forEach(comment => {
             if (!newAvatarMap.has(comment.user.username))
               newAvatarMap.set(comment.user.username, getRandomInt(1, 70))

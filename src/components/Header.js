@@ -10,7 +10,7 @@ function Header({ user, avatarId }) {
           <img className="logo" src={logo} alt="taggram logo" />
           <div className="current-user">
             <div className="current-user__username">
-              {user?.username ? user.username : "Loading..."}
+              {user ? user.username : "Loading..."}
             </div>
             <ProfileIcon isHeaderIcon="true" userAvatarId={avatarId} />
           </div>
