@@ -2,8 +2,6 @@ import "../styles/profile.scss"
 import ProfileIcon from "./ProfileIcon"
 
 function Profile({ username, location, avatarId }) {
-  console.log(username)
-  console.log(location)
   return (
     <div className="profile">
       <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
