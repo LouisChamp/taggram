@@ -15,35 +15,35 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
   const timeAgo = new TimeAgo("pt")
 
   // Update post's comment section with new comments and scroll down to the latest comment
-  const handleSubmitComment = event => {
+  // Async Await method used here alternatively to promise chaining to demonstrate proficiency
+  const handleSubmitComment = async event => {
     const comment = newCommentRef.current.value
 
     if (comment !== "") {
-      axios
-        .post(`/posts/${post.uuid}/comments`, {
+      try {
+        const res = await axios.post(`/posts/${post.uuid}/comments`, {
           username: user.username,
           message: comment,
         })
-        .then(response => {
-          newCommentRef.current.value = ""
-
-          // Workaround for avatars not showing from API
-          let newAvatarMap = new Map(post.avatarMap)
-          newAvatarMap.set(user.username, avatarId)
-          response.data.forEach(comment => {
-            if (!newAvatarMap.has(comment.user.username))
-              newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
-          })
-          // end Workaround
-
-          updateCurrentPost({
-            ...post,
-            comments: response.data,
-            avatarMap: newAvatarMap,
-          })
-          scrollDown(commentsRef)
+        newCommentRef.current.value = ""
+        // Workaround for avatars not showing from API
+        let newAvatarMap = new Map(post.avatarMap)
+        newAvatarMap.set(user.username, avatarId)
+        res.data.forEach(comment => {
+          if (!newAvatarMap.has(comment.user.username))
+            newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
         })
-        .catch(handleErrors)
+        // end Workaround
+
+        updateCurrentPost({
+          ...post,
+          comments: res.data,
+          avatarMap: newAvatarMap,
+        })
+        scrollDown(commentsRef)
+      } catch (err) {
+        handleErrors(err)
+      }
     }
   }
 
