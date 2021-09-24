@@ -1,9 +1,7 @@
 import "../styles/profileIcon.scss"
 import image from "../images/defaultAvatar.png"
 
-function ProfileIcon(props) {
-  const { isHeaderIcon, userAvatarId } = props
-
+function ProfileIcon({ isHeaderIcon, userAvatarId }) {
   return (
     <img
       className={isHeaderIcon ? "current-user__avatar" : "comment-user__avatar"}

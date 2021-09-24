@@ -88,12 +88,12 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
       <div className="post-footer">
         <div className="post-meta">
           <div className="post-comment-count">
-            {/* {post.comments.length} comentário
-            {post.comments.length === 1 ? "" : "s"} */}
-            comentários
+            {post &&
+              post.comments.length.toString() +
+                " comentário".concat(post.comments.length === 1 ? "" : "s")}
           </div>
           <div className="post-date">
-            {post ? timeAgo.format(Date.parse(post.created_at), postStyle) : ""}
+            {post && timeAgo.format(Date.parse(post.created_at), postStyle)}
           </div>
         </div>
         <div className="add-comment">

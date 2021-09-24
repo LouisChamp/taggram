@@ -1,9 +1,7 @@
 import "../styles/comment.scss"
 import ProfileIcon from "./ProfileIcon"
 
-function Comment(props) {
-  const { author, message, timeAgo, avatarId } = props
-
+function Comment({ author, message, timeAgo, avatarId }) {
   return (
     <div className="comment">
       <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
