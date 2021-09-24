@@ -1,4 +1,5 @@
 import "../styles/profileIcon.scss"
+import image from "../images/blank.png"
 
 function ProfileIcon(props) {
   const { isHeaderIcon, userAvatarId } = props
@@ -10,7 +11,9 @@ function ProfileIcon(props) {
           ? "current-user__avatar"
           : "comment-user__avatar"
       }
-      src={`https://i.pravatar.cc/150?img=${userAvatarId}`}
+      src={
+        userAvatarId ? `https://i.pravatar.cc/150?img=${userAvatarId}` : image
+      }
       alt="profileIcon"
     />
   )
