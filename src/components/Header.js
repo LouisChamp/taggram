@@ -1,16 +1,12 @@
 import "../styles/header.scss"
 import logo from "../images/taggram.png"
 import ProfileIcon from "./ProfileIcon"
-import { useEffect } from "react/cjs/react.development"
+import { useContext } from "react"
+import { StateContext, UserContext } from "./App"
 
-function Header({ user, avatarMapDispatcher }) {
-  let avatarId
-
-  useEffect(() => {
-    avatarId = avatarMapDispatcher({
-      type: "map/get",
-    })?.get(user?.username)
-  }, [avatarMapDispatcher])
+function Header() {
+  const avatarMap = useContext(StateContext)
+  const user = useContext(UserContext)
 
   return (
     <>
@@ -21,7 +17,10 @@ function Header({ user, avatarMapDispatcher }) {
             <div className="current-user__username">
               {user ? user.username : "Loading..."}
             </div>
-            <ProfileIcon isHeaderIcon="true" userAvatarId={avatarId} />
+            <ProfileIcon
+              isHeaderIcon="true"
+              userAvatarId={avatarMap?.get(user?.username)}
+            />
           </div>
         </div>
       </div>

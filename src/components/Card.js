@@ -1,13 +1,16 @@
 import "../styles/card.scss"
 import blank from "../images/blank-image.png"
+import { useContext } from "react"
+import { PostContext } from "./Body"
 
-function Card({ postDispatcher }) {
-  const photo = postDispatcher({ type: "post/get" })?.photo
+function Card() {
+  const post = useContext(PostContext)
+
   return (
     <div className="card">
       <img
         className="cardImage"
-        src={photo ? photo : blank}
+        src={post?.photo ? post.photo : blank}
         alt="card content"
       />
     </div>

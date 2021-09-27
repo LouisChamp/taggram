@@ -7,6 +7,9 @@ import axios from "axios"
 import loader from "../images/ajax-loader.gif"
 
 const userAvatarId = getRandomInt(1, 70)
+export const StateContext = React.createContext()
+export const DispatchContext = React.createContext()
+export const UserContext = React.createContext()
 
 const mapReducer = (state, action) => {
   switch (action.type) {
@@ -48,7 +51,7 @@ function App() {
         })
       })
       .catch(console.log)
-      .finally(setIsLoading(false))
+      .finally(() => setIsLoading(false))
   }, [])
 
   // Ajax loader technique for better user experience
@@ -61,10 +64,16 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Header user={user} avatarMapDispatcher={dispatchAvatarMap} />
-      <Body user={user} avatarMapDispatcher={dispatchAvatarMap} />
-    </div>
+    <UserContext.Provider value={user}>
+      <DispatchContext.Provider value={dispatchAvatarMap}>
+        <StateContext.Provider value={avatarMap}>
+          <div className="App">
+            <Header />
+            <Body />
+          </div>
+        </StateContext.Provider>
+      </DispatchContext.Provider>
+    </UserContext.Provider>
   )
 }
 
