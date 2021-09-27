@@ -36,6 +36,8 @@ function Body() {
   const avatarMap = useContext(StateContext)
 
   useEffect(() => {
+    let mounted = true
+
     setIsLoading(true)
     axios
       .get("/post")
@@ -70,7 +72,7 @@ function Body() {
       })
       .catch(console.log)
       .finally(() => {
-        setIsLoading(false)
+        if (mounted) setIsLoading(false)
       })
   }, [])
 
