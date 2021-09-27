@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useReducer } from "react"
 import axios from "axios"
 import Sidebar from "./Sidebar"
 import Card from "./Card"
@@ -6,9 +6,27 @@ import loader from "../images/ajax-loader.gif"
 import "../styles/body.scss"
 import getRandomInt from "../helper/random"
 
-function Body({ user, avatarId }) {
+const profileAvatarId = getRandomInt(1, 70)
+
+const postReducer = (state, action) => {
+  switch (action.type) {
+    case "post/get":
+      return state
+    case "post/set":
+      return action.payload
+    case "post/updateComments":
+      return {
+        ...state,
+        comments: action.payload,
+      }
+    default:
+      return new Error("Invalid action")
+  }
+}
+
+function Body({ user, avatarMapDispatcher }) {
   // React Hooks
-  const [post, setPost] = useState(undefined)
+  const [post, dispatchPost] = useReducer(postReducer, null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -17,16 +35,28 @@ function Body({ user, avatarId }) {
       .get("/post")
       .then(response => {
         // Workaround for avatars not showing from API
-        let avatarMap = new Map()
-        avatarMap.set(response.data.user.username, getRandomInt(1, 70))
-        response.data.comments.forEach(comment => {
-          if (!avatarMap.has(comment.user.username))
-            avatarMap.set(comment.user.username, getRandomInt(1, 70))
+        // Set post owner avatar ID
+        avatarMapDispatcher({
+          type: "map/setItems",
+          payload: [
+            {
+              username: response.data.user.username,
+              avatarId: profileAvatarId,
+            },
+          ],
         })
-        response.data.avatarMap = avatarMap
+        // Set comment authors's avatar IDS
+        const commentAvatarIds = response.data.comments.map(comment => ({
+          username: comment.user.username,
+          avatarId: getRandomInt(1, 70),
+        }))
+        avatarMapDispatcher({
+          type: "map/setItems",
+          payload: commentAvatarIds,
+        })
         // end Workaround
 
-        setPost(response.data)
+        dispatchPost({ type: "post/set", payload: response.data })
       })
       .catch(console.log)
       .finally(setIsLoading(false))
@@ -44,12 +74,11 @@ function Body({ user, avatarId }) {
   return (
     <div className="body">
       <div className="body__container">
-        <Card image={post?.photo} />
+        <Card postDispatcher={dispatchPost} />
         <Sidebar
-          post={post}
           user={user}
-          updateCurrentPost={setPost}
-          avatarId={avatarId}
+          postDispatcher={dispatchPost}
+          avatarMapDispatcher={avatarMapDispatcher}
         />
       </div>
     </div>

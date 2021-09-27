@@ -7,7 +7,7 @@ import TimeAgo from "javascript-time-ago"
 import { commentStyle, postStyle } from "../helper/time"
 import getRandomInt from "../helper/random"
 
-function Sidebar({ post, user, updateCurrentPost, avatarId }) {
+function Sidebar({ user, postDispatcher, avatarMapDispatcher }) {
   // React Hooks
   const newCommentRef = useRef(null)
   const commentsRef = useRef(null)
@@ -19,26 +19,29 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
   const handleSubmitComment = async event => {
     const comment = newCommentRef.current.value
 
-    if (comment !== "") {
+    if (comment !== "" && postDispatcher({ type: "post/get" })) {
       try {
-        const res = await axios.post(`/posts/${post.uuid}/comments`, {
+        const response = await axios.post(`/posts/${post.uuid}/comments`, {
           username: user.username,
           message: comment,
         })
         newCommentRef.current.value = ""
+
         // Workaround for avatars not showing from API
-        let newAvatarMap = new Map(post.avatarMap)
-        newAvatarMap.set(user.username, avatarId)
-        res.data.forEach(comment => {
-          if (!newAvatarMap.has(comment.user.username))
-            newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
+        const commentAvatarIds = response.data.comments.map(comment => ({
+          username: comment.user.username,
+          avatarId: getRandomInt(1, 70),
+        }))
+        avatarMapDispatcher({
+          type: "map/setItems",
+          payload: commentAvatarIds,
         })
+
         // end Workaround
 
-        updateCurrentPost({
-          ...post,
-          comments: res.data,
-          avatarMap: newAvatarMap,
+        postDispatcher({
+          type: "post/updateComments",
+          payload: response.data,
         })
         scrollDown(commentsRef)
       } catch (err) {
@@ -60,6 +63,8 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
     ref.current.scrollTop = ref.current.scrollHeight
   }
 
+  const post = postDispatcher({ type: "post/get" })
+
   return (
     <div className="sidebar">
       <Profile
@@ -80,7 +85,10 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
                 Date.parse(comment.created_at),
                 commentStyle
               )}
-              avatarId={post.avatarMap.get(comment.user.username)}
+              avatarId={avatarMapDispatcher({
+                type: "map/getItem",
+                payload: comment.user.username,
+              })}
             />
           ))
         ) : (
