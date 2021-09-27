@@ -12,6 +12,8 @@ function Body({ user, avatarId }) {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    let mounted = true
+
     setIsLoading(true)
     axios
       .get("/post")
@@ -25,13 +27,14 @@ function Body({ user, avatarId }) {
         })
         response.data.avatarMap = avatarMap
         // end Workaround
-
-        setPost(response.data)
+        if (mounted) setPost(response.data)
       })
       .catch(console.log)
       .finally(() => {
-        setIsLoading(false)
+        if (mounted) setIsLoading(false)
       })
+
+    return () => (mounted = false)
   }, [])
 
   // Ajax loader
