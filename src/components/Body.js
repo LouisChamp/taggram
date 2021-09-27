@@ -29,7 +29,9 @@ function Body({ user, avatarId }) {
         setPost(response.data)
       })
       .catch(console.log)
-      .finally(setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [])
 
   // Ajax loader
