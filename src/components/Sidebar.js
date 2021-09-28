@@ -5,7 +5,7 @@ import React, { useRef } from "react"
 import axios from "axios"
 import TimeAgo from "javascript-time-ago"
 import { commentStyle, postStyle } from "../helper/time"
-import getRandomInt from "../helper/random"
+import useAsync from "../helper/customHooks"
 
 function Sidebar({ post, user, updateCurrentPost }) {
   // React Hooks
@@ -15,7 +15,8 @@ function Sidebar({ post, user, updateCurrentPost }) {
   const timeAgo = new TimeAgo("pt")
 
   // Update post's comment section with new comments and scroll down to the latest comment
-  const handleSubmitComment = event => {
+
+  const handleSubmitComment = _event => {
     const comment = newCommentRef.current.value
 
     if (comment !== "") {
@@ -27,19 +28,11 @@ function Sidebar({ post, user, updateCurrentPost }) {
         .then(response => {
           newCommentRef.current.value = ""
 
-          // // Workaround for avatars not showing from API
-          // let newAvatarMap = new Map(post.avatarMap)
-          // newAvatarMap.set(user.username, avatarId)
-          // response.data.forEach(comment => {
-          //   if (!newAvatarMap.has(comment.user.username))
-          //     newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
-          // })
-          // // end Workaround
-
           updateCurrentPost({
             ...post,
             comments: response.data,
           })
+
           scrollDown(commentsRef)
         })
         .catch(handleErrors)
@@ -61,14 +54,16 @@ function Sidebar({ post, user, updateCurrentPost }) {
 
   return (
     <div className="sidebar">
-      <Profile
-        username={post?.user?.username}
-        city={post?.location?.city}
-        country={post?.location?.country}
-        avatar={post?.user?.avatar}
-      />
+      {post && (
+        <Profile
+          username={post?.user?.username}
+          city={post?.location?.city}
+          country={post?.location?.country}
+          avatar={post?.user?.avatar}
+        />
+      )}
       <div className="comments" ref={commentsRef}>
-        {post ? (
+        {post &&
           post.comments.map(comment => (
             <Comment
               key={comment.user.username + comment.created_at}
@@ -80,10 +75,7 @@ function Sidebar({ post, user, updateCurrentPost }) {
               )}
               avatar={comment.user.avatar}
             />
-          ))
-        ) : (
-          <div></div>
-        )}
+          ))}
       </div>
       <div className="post-footer">
         <div className="post-meta">

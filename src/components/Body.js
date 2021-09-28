@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar"
 import Card from "./Card"
 import loader from "../images/ajax-loader.gif"
 import "../styles/body.scss"
-import getRandomInt from "../helper/random"
 
 function Body({ user }) {
   // React Hooks
@@ -16,20 +15,12 @@ function Body({ user }) {
     axios
       .get("/post")
       .then(response => {
-        // // Workaround for avatars not showing from API
-        // let avatarMap = new Map()
-        // avatarMap.set(response.data.user.username, getRandomInt(1, 70))
-        // response.data.comments.forEach(comment => {
-        //   if (!avatarMap.has(comment.user.username))
-        //     avatarMap.set(comment.user.username, getRandomInt(1, 70))
-        // })
-        // response.data.avatarMap = avatarMap
-        // // end Workaround
-
         setPost(response.data)
       })
       .catch(console.log)
       .finally(() => setIsLoading(false))
+
+    return () => {}
   }, [])
 
   // Ajax loader

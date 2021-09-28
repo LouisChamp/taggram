@@ -8,7 +8,7 @@ function Profile({ username, city, country, avatar }) {
       <div className="text-container">
         <span className="post-author">{username && username}</span>
         <span className="location">
-          {city ? "Loading..." : city + ", " + country}
+          {city ? city + ", " + country : "Loading..."}
         </span>
       </div>
     </div>

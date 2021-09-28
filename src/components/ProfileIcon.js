@@ -1,11 +1,11 @@
 import "../styles/profileIcon.scss"
-import image from "../images/defaultAvatar.png"
+import defaultAvatar from "../images/default-avatar.png"
 
 function ProfileIcon({ isHeaderIcon, avatar }) {
   return (
     <img
       className={isHeaderIcon ? "current-user__avatar" : "comment-user__avatar"}
-      src={avatar ? avatar : image}
+      src={avatar && !/uifaces/.test(avatar) ? avatar : defaultAvatar}
       alt="profileIcon"
     />
   )

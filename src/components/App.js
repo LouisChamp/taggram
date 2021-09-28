@@ -1,7 +1,6 @@
 import "../styles/App.scss"
 import Header from "./Header"
 import Body from "./Body"
-import getRandomInt from "../helper/random"
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import loader from "../images/ajax-loader.gif"
