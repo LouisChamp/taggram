@@ -5,7 +5,6 @@ import React, { useRef } from "react"
 import axios from "axios"
 import TimeAgo from "javascript-time-ago"
 import { commentStyle, postStyle } from "../helper/time"
-import useAsync from "../helper/customHooks"
 
 function Sidebar({ post, user, updateCurrentPost }) {
   // React Hooks

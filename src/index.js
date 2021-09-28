@@ -10,7 +10,8 @@ import axios from "axios"
 TimeAgo.addDefaultLocale(pt)
 TimeAgo.addLabels("pt", "commentLabels", commentLabels)
 TimeAgo.addLabels("pt", "postLabels", postLabels)
-axios.defaults.baseURL = "https://taggram.herokuapp.com"
+// axios.defaults.baseURL = "https://taggram.herokuapp.com"
+axios.defaults.baseURL = "http://localhost:3001"
 
 ReactDOM.render(
   <React.StrictMode>

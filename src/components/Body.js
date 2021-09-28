@@ -6,8 +6,9 @@ import loader from "../images/ajax-loader.gif"
 import "../styles/body.scss"
 
 function Body({ user }) {
+  // console.log("rendering body") // REMOVE
   // React Hooks
-  const [post, setPost] = useState(undefined)
+  const [post, setPost] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -16,11 +17,14 @@ function Body({ user }) {
       .get("/post")
       .then(response => {
         setPost(response.data)
+        setIsLoading(false)
       })
       .catch(console.log)
       .finally(() => setIsLoading(false))
 
-    return () => {}
+    return () => {
+      setIsLoading(false)
+    }
   }, [])
 
   // Ajax loader

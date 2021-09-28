@@ -12,7 +12,7 @@ function Header({ user }) {
             <div className="current-user__username">
               {user ? user.username : "Loading..."}
             </div>
-            <ProfileIcon isHeaderIcon={true} user={user} />
+            <ProfileIcon isHeaderIcon={true} avatar={user?.avatar} />
           </div>
         </div>
       </div>
