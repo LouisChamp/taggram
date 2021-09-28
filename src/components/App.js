@@ -6,11 +6,9 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import loader from "../images/ajax-loader.gif"
 
-const avatarId = getRandomInt(1, 70)
-
 function App() {
   // React Hooks
-  const [user, setUser] = useState(undefined)
+  const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -21,7 +19,7 @@ function App() {
         setUser(response.data)
       })
       .catch(console.log)
-      .finally(setIsLoading(false))
+      .finally(() => setIsLoading(false))
   }, [])
 
   // Ajax loader technique for better user experience
@@ -35,8 +33,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header user={user} avatarId={avatarId} />
-      <Body user={user} avatarId={avatarId} />
+      <Header user={user} />
+      <Body user={user} />
     </div>
   )
 }

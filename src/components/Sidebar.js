@@ -7,7 +7,7 @@ import TimeAgo from "javascript-time-ago"
 import { commentStyle, postStyle } from "../helper/time"
 import getRandomInt from "../helper/random"
 
-function Sidebar({ post, user, updateCurrentPost, avatarId }) {
+function Sidebar({ post, user, updateCurrentPost }) {
   // React Hooks
   const newCommentRef = useRef(null)
   const commentsRef = useRef(null)
@@ -27,19 +27,18 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
         .then(response => {
           newCommentRef.current.value = ""
 
-          // Workaround for avatars not showing from API
-          let newAvatarMap = new Map(post.avatarMap)
-          newAvatarMap.set(user.username, avatarId)
-          response.data.forEach(comment => {
-            if (!newAvatarMap.has(comment.user.username))
-              newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
-          })
-          // end Workaround
+          // // Workaround for avatars not showing from API
+          // let newAvatarMap = new Map(post.avatarMap)
+          // newAvatarMap.set(user.username, avatarId)
+          // response.data.forEach(comment => {
+          //   if (!newAvatarMap.has(comment.user.username))
+          //     newAvatarMap.set(comment.user.username, getRandomInt(1, 70))
+          // })
+          // // end Workaround
 
           updateCurrentPost({
             ...post,
             comments: response.data,
-            avatarMap: newAvatarMap,
           })
           scrollDown(commentsRef)
         })
@@ -64,8 +63,9 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
     <div className="sidebar">
       <Profile
         username={post?.user?.username}
-        location={post?.location?.city + ", " + post?.location?.country}
-        avatarId={post?.avatarMap.get(post.user.username)}
+        city={post?.location?.city}
+        country={post?.location?.country}
+        avatar={post?.user?.avatar}
       />
       <div className="comments" ref={commentsRef}>
         {post ? (
@@ -78,7 +78,7 @@ function Sidebar({ post, user, updateCurrentPost, avatarId }) {
                 Date.parse(comment.created_at),
                 commentStyle
               )}
-              avatarId={post.avatarMap.get(comment.user.username)}
+              avatar={comment.user.avatar}
             />
           ))
         ) : (

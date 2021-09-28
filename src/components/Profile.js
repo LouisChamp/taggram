@@ -1,16 +1,14 @@
 import "../styles/profile.scss"
 import ProfileIcon from "./ProfileIcon"
 
-function Profile({ username, location, avatarId }) {
+function Profile({ username, city, country, avatar }) {
   return (
     <div className="profile">
-      <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
+      <ProfileIcon isHeaderIcon={false} avatar={avatar} />
       <div className="text-container">
-        <span className="post-author">
-          {username === undefined ? "" : username}
-        </span>
+        <span className="post-author">{username && username}</span>
         <span className="location">
-          {username === undefined ? "Loading..." : location}
+          {city ? "Loading..." : city + ", " + country}
         </span>
       </div>
     </div>

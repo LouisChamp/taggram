@@ -2,7 +2,7 @@ import "../styles/header.scss"
 import logo from "../images/taggram.png"
 import ProfileIcon from "./ProfileIcon"
 
-function Header({ user, avatarId }) {
+function Header({ user }) {
   return (
     <>
       <div className="header">
@@ -12,7 +12,7 @@ function Header({ user, avatarId }) {
             <div className="current-user__username">
               {user ? user.username : "Loading..."}
             </div>
-            <ProfileIcon isHeaderIcon="true" userAvatarId={avatarId} />
+            <ProfileIcon isHeaderIcon={true} user={user} />
           </div>
         </div>
       </div>

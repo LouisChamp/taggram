@@ -1,13 +1,11 @@
 import "../styles/profileIcon.scss"
 import image from "../images/defaultAvatar.png"
 
-function ProfileIcon({ isHeaderIcon, userAvatarId }) {
+function ProfileIcon({ isHeaderIcon, avatar }) {
   return (
     <img
       className={isHeaderIcon ? "current-user__avatar" : "comment-user__avatar"}
-      src={
-        userAvatarId ? `https://i.pravatar.cc/150?img=${userAvatarId}` : image
-      }
+      src={avatar ? avatar : image}
       alt="profileIcon"
     />
   )

@@ -1,10 +1,10 @@
 import "../styles/comment.scss"
 import ProfileIcon from "./ProfileIcon"
 
-function Comment({ author, message, timeAgo, avatarId }) {
+function Comment({ author, message, timeAgo, avatar }) {
   return (
     <div className="comment">
-      <ProfileIcon isHeaderIcon={false} userAvatarId={avatarId} />
+      <ProfileIcon isHeaderIcon={false} avatar={avatar} />
       <div className="text-container">
         <p className="comment-container">
           <span className="author">{author}</span>
