@@ -5,7 +5,7 @@ function ProfileIcon({ isHeaderIcon, avatar }) {
   return (
     <img
       className={isHeaderIcon ? "current-user__avatar" : "comment-user__avatar"}
-      src={avatar ? avatar : defaultAvatar}
+      src={avatar ?? defaultAvatar}
       alt="profileIcon"
     />
   )

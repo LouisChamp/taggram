@@ -12,6 +12,7 @@ TimeAgo.addLabels("pt", "commentLabels", commentLabels)
 TimeAgo.addLabels("pt", "postLabels", postLabels)
 // axios.defaults.baseURL = "https://taggram.herokuapp.com"
 axios.defaults.baseURL = "http://localhost:3001"
+axios.defaults.withCredentials = true
 
 ReactDOM.render(
   <React.StrictMode>
