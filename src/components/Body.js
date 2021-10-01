@@ -18,14 +18,16 @@ function Body({ user }) {
     axios
       .get("/post")
       .then(response => {
-        setPost(response.data)
-        setIsLoading(false)
+        if (mounted) {
+          setPost(response.data)
+          setIsLoading(false)
+        }
       })
       .catch(console.log)
       .finally(() => setIsLoading(false))
 
     return () => {
-      setIsLoading(false)
+      mounted = false
     }
   }, [])
 

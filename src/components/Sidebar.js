@@ -15,7 +15,7 @@ function Sidebar({ post, user, updateCurrentPost }) {
 
   // Update post's comment section with new comments and scroll down to the latest comment
   // Async Await method used here alternatively to promise chaining to demonstrate proficiency
-  const handleSubmitComment = async event => {
+  const handleSubmitComment = async _event => {
     const comment = newCommentRef.current.value
 
     if (comment !== "") {
