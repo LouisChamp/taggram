@@ -20,21 +20,17 @@ function Sidebar({ post, user, updateCurrentPost }) {
 
     if (comment !== "") {
       try {
-        const res = await axios
-          .post(`/posts/${post.uuid}/comments`, {
-            username: user.username,
-            message: comment,
-          })
-          .then(response => {
-            newCommentRef.current.value = ""
+        const response = await axios.post(`/posts/${post.uuid}/comments`, {
+          username: user.username,
+          message: comment,
+        })
+        newCommentRef.current.value = ""
 
-            updateCurrentPost({
-              ...post,
-              comments: response.data,
-            })
+        updateCurrentPost({
+          ...post,
+          comments: response.data,
+        })
 
-            scrollDown(commentsRef)
-          })
         scrollDown(commentsRef)
       } catch (err) {
         handleErrors(err)
