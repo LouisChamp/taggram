@@ -18,7 +18,9 @@ function App() {
         setUser(response.data)
       })
       .catch(console.log)
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [])
 
   // Ajax loader technique for better user experience

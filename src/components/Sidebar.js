@@ -14,27 +14,31 @@ function Sidebar({ post, user, updateCurrentPost }) {
   const timeAgo = new TimeAgo("pt")
 
   // Update post's comment section with new comments and scroll down to the latest comment
-
-  const handleSubmitComment = _event => {
+  // Async Await method used here alternatively to promise chaining to demonstrate proficiency
+  const handleSubmitComment = async event => {
     const comment = newCommentRef.current.value
 
     if (comment !== "") {
-      axios
-        .post(`/posts/${post.uuid}/comments`, {
-          username: user.username,
-          message: comment,
-        })
-        .then(response => {
-          newCommentRef.current.value = ""
-
-          updateCurrentPost({
-            ...post,
-            comments: response.data,
+      try {
+        const res = await axios
+          .post(`/posts/${post.uuid}/comments`, {
+            username: user.username,
+            message: comment,
           })
+          .then(response => {
+            newCommentRef.current.value = ""
 
-          scrollDown(commentsRef)
-        })
-        .catch(handleErrors)
+            updateCurrentPost({
+              ...post,
+              comments: response.data,
+            })
+
+            scrollDown(commentsRef)
+          })
+        scrollDown(commentsRef)
+      } catch (err) {
+        handleErrors(err)
+      }
     }
   }
 
@@ -79,9 +83,12 @@ function Sidebar({ post, user, updateCurrentPost }) {
       <div className="post-footer">
         <div className="post-meta">
           <div className="post-comment-count">
-            {post &&
-              post.comments.length.toString() +
-                " comentário".concat(post.comments.length === 1 ? "" : "s")}
+            {post && (
+              <>
+                {post.comments.length} comentário
+                {post.comments.length !== 1 && "s"}
+              </>
+            )}
           </div>
           <div className="post-date">
             {post && timeAgo.format(Date.parse(post.created_at), postStyle)}

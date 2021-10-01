@@ -12,6 +12,8 @@ function Body({ user }) {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    let mounted = true
+
     setIsLoading(true)
     axios
       .get("/post")
